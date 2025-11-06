@@ -289,6 +289,8 @@ auto Dfa<TypedDfaState, TypedNfaState>::process_reg_ops(
 // TODO: handle utf8 case in DFA generation.
 template <typename TypedDfaState, typename TypedNfaState>
 auto Dfa<TypedDfaState, TypedNfaState>::generate(Nfa<TypedNfaState> const& nfa) -> void {
+    std::cerr << "Num NFA states: " << nfa.get_bfs_traversal_order().size() << "\n";
+
     std::map<tag_id_t, reg_id_t> tag_id_to_initial_reg_id;
     initialize_registers(
             nfa.get_num_tags(),
@@ -320,8 +322,10 @@ auto Dfa<TypedDfaState, TypedNfaState>::generate(Nfa<TypedNfaState> const& nfa) 
             dfa_state->add_byte_transition(ascii_value, {reg_ops, dest_state});
         }
     }
-    std::cerr << "Num DFA states: " << dfa_states.size() << "\n";
+
     m_num_regs = m_reg_handler.get_num_regs();
+    std::cerr << "Num DFA states: " << dfa_states.size() << "\n";
+    std::cerr << "Num registers: " << m_num_regs << "\n";
 }
 
 template <typename TypedDfaState, typename TypedNfaState>

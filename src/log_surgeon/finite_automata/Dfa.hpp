@@ -15,6 +15,7 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
+#include <iostream>
 
 #include <fmt/format.h>
 #include <fmt/ranges.h>
@@ -319,6 +320,7 @@ auto Dfa<TypedDfaState, TypedNfaState>::generate(Nfa<TypedNfaState> const& nfa) 
             dfa_state->add_byte_transition(ascii_value, {reg_ops, dest_state});
         }
     }
+    std::cerr << "Num DFA states: " << dfa_states.size() << "\n";
     m_num_regs = m_reg_handler.get_num_regs();
 }
 
